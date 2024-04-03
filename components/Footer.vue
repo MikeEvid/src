@@ -7,7 +7,6 @@
       <div class="col">
         © 1990–2024. Компания «Кокоона»<br/>  
          Почта для обратной связи: igra@ kokona.ru
-
       </div>
      
       <div class="col">
@@ -19,7 +18,8 @@
 </template>
 
 <style scoped>
-   .footer{
+
+  .footer{
 
     font-family: "Gilroy-Light";
     margin-top: 60px !important;
@@ -34,10 +34,12 @@
     font-size: 14px;
     color: white;
   }
-  .footer .col{
-    max-width: 48%;
-    min-width: 300px;
-
-    margin: auto
+  .footer .col:first{
+     margin: auto;
+     margin-right: 20px;
+  }
+  .footer .col:last-child{
+    margin-left: 20px;
+    margin-right: auto;
   }
 </style>

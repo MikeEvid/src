@@ -21,63 +21,53 @@
     data (){
         return {
             mousePressRightNow: false,
-            timerCount: 0,
+
             positionTop: 0,
             lastPosY : 0,
             lips_name_pic: 'src/img/coil/lips_closed_1 1.png',
             machine_handle_name_pic: 'src/img/coil/1@4x.png',
             machine_shfit: 'margin-bottom:100%; margin-top:-250%',
+
             time_last_touch: 0, // для отслеживания двойных нажатий / скролл-событий  на больших экранах
             // machine_handle_position:
             game_progress: 0,
             game_title_animation_timer: 0,
-            game_progress_finish: 1000 // индекс - как долго идет игра
+            game_progress_finish: 1000, // индекс - как долго идет игра
+
+            helperBottomMargin: {
+                helper1: 1300,
+                helper2: 2100
+            }
         }
     },
-    watch: {
-        timerCount: {
-            handler() {
-                    setTimeout(() => {
-                        this.timerCount++;
-                        this.tik();
-                    }, 1000);
-            },
-            immediate: true 
+    computed: {
+        helper1css() {
+            return {
+                transform: ` translate3d(0px,-${this.helperBottomMargin.helper1}px, 0px)`
+            }
+        },    
+        helper2css() {
+            return {
+                
+                transform: ` translate3d(0px,-${this.helperBottomMargin.helper2}px, 0px)`
+            }
         }
-     },
+    },
+
     methods: {
         touchMove() { 
             this.moveProgress();
         },
-        tik () {
-            if(this.timerCount % 5 == 0) {// добавляем класс скрытия когда таймер кратен 5 секундам
-                this.logoClass = 'zoom-leave-active';
-                this.$refs.regLogo.classList.add('zoom-leave-active');
-                this.$refs.regLogo.classList.remove('zoom-enter-active');
 
-            } else if(this.timerCount % 5 == 1){ // убираем  класс когда таймер кратен 5 сек + 1
-                this.$refs.regLogo.classList.add('zoom-enter-active');
-                this.$refs.regLogo.classList.remove('zoom-leave-active');
-
-            } 
-            
-            if(this.timerCount % 20 == 5){
-                this.$refs.regHelper.classList.add('regHelper-Wave');
-            } else if( this.timerCount % 20 == 9){
-                this.$refs.regHelper.classList.remove('regHelper-Wave');
-            }else if(this.timerCount % 20 == 14){
-                this.$refs.regHelper2.classList.add('regHelper-Wave');
-            }else if(this.timerCount % 20 == 19){
-                this.$refs.regHelper2.classList.remove('regHelper-Wave');
-            }
-
-        },
         moveProgress (event) {
-            if(this.time_last_touch != Math.round(Date.now()/1) && this.lastPosY < event.clientY){
+            if(this.time_last_touch != Math.round(Date.now()/10) && this.lastPosY < event.clientY){
     
-                this.time_last_touch = Math.round(Date.now()/1);
+                this.time_last_touch = Math.round(Date.now()/10);
                 ++this.game_progress;     
 
+                this.helperBottomMargin.helper1 -= 2;
+                this.helperBottomMargin.helper2 -= 2;
+                
                 if(this.game_progress > this.game_progress_finish)
                     this.game_finish_callback();
 
@@ -131,8 +121,10 @@
             <div class="empty"> </div>
 
         </div>
-        <img src="../img/helper1.png" class="regHelper" ref="regHelper"/>
-        <img src="../img/helper2.png" class="regHelper2" ref="regHelper2"/>
+
+        <img src="../img/helper1.png"  ref="regHelper" :style="helper1css" class="regHelper"/>
+        <img src="../img/helper2.png" ref="regHelper2" :style="helper2css" class="regHelper2"/>
+
         <span class="touchArea"
             id="gameArea2"
             ref="gameArea2"
@@ -151,6 +143,16 @@
 </template>
 
 <style scoped>
+.gameProgress{
+    background-color: #FDF7B8;
+    color: black;
+    position: absolute;
+    padding: 6px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 600;
+    min-width: 40px;
+}
     .touchArea{
         background-color: lightgreen;
         opacity: 0;
@@ -165,7 +167,9 @@
         position: absolute;
         height: 80px;
         bottom: 20px;
-        opacity: 0;
+        /* -webkit-transform: translate3d(0,0,0); */
+        will-change: bottom; 
+        /* opacity: 0; */
     }
     .regHelper2{
         /* right:0; */
@@ -174,6 +178,7 @@
     }
     .empty{
         min-height: 900px;
+              /* -webkit-transform: translate3d(0,0,0); */
     }
     .lips{
         width: 220px !important;
@@ -241,45 +246,8 @@
         max-height: 90%;
         margin: auto 0px; 
         overflow: hidden;
+        position: relative;
         /* position: relative; */
-    }
-
-    .zoom-enter-active {animation: zoom-in 1s ease-in-out;}
-    .zoom-leave-active {animation: zoom-out 1s ease-in-out;}
-    @keyframes zoom-in {
-        from {transform: scale(0.5,0.5);
-           ;}
-        to {transform: scale(1,1);}
-    }
-    @keyframes zoom-out {
-        from {transform: scale(1,1);}
-        to {transform: scale(0.5,0.5);}
-    }
-
-    .regHelper-Wave {animation: helperWave 4s ease-in-out;}
-    /* .regHelper-down {animation: helperDown 1s ease-in-out;} */
-    @keyframes helperWave {
-        0% {
-            display: none;
-            opacity: 0;
-            margin-bottom: 300px;
- 
-        }
-        30% {
-            display: block;
-            opacity: 1;
-            margin-bottom: 50px;
-        }
-        80% {
-            display: block;
-            opacity: 1;
-            margin-bottom: 50px;
-        }
-        100% {
-            display: block;
-            opacity: 0;
-            margin-bottom: 0px;
-        }
     }
 
 </style>
