@@ -43,12 +43,13 @@
     computed: {
         helper1css() {
             return {
-                bottom: `${this.helperBottomMargin.helper1}px` 
+                transform: ` translate3d(0px,-${this.helperBottomMargin.helper1}px, 0px)`
             }
         },    
         helper2css() {
             return {
-                bottom: `${this.helperBottomMargin.helper2}px` 
+                
+                transform: ` translate3d(0px,-${this.helperBottomMargin.helper2}px, 0px)`
             }
         }
     },
@@ -59,9 +60,9 @@
         },
 
         moveProgress (event) {
-            if(this.time_last_touch != Math.round(Date.now()/1) && this.lastPosY < event.clientY){
+            if(this.time_last_touch != Math.round(Date.now()/10) && this.lastPosY < event.clientY){
     
-                this.time_last_touch = Math.round(Date.now()/1);
+                this.time_last_touch = Math.round(Date.now()/10);
                 ++this.game_progress;     
 
                 this.helperBottomMargin.helper1 -= 2;
@@ -108,7 +109,6 @@
     <div class="game_column column noselect2 onlyMobileMargin" 
 
         ref="gameArea">
-        <div class="gameProgress">{{ this.game_progress ? this.game_progress : 'Тяни язык!' }}</div>
         <img src="../img/logo.png" class="logo"  ref="regLogo">
             <img :src="lips_name_pic" class="lips">
         <div class="img_row">
@@ -167,6 +167,8 @@
         position: absolute;
         height: 80px;
         bottom: 20px;
+        /* -webkit-transform: translate3d(0,0,0); */
+        will-change: bottom; 
         /* opacity: 0; */
     }
     .regHelper2{
@@ -176,6 +178,7 @@
     }
     .empty{
         min-height: 900px;
+              /* -webkit-transform: translate3d(0,0,0); */
     }
     .lips{
         width: 220px !important;
