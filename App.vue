@@ -78,13 +78,13 @@
   <div class="main_container" >
     <BackgroundElements className="fullSpace2 "/>
     <div  class="row_main_columns onlyMobileMargin">
-      <LeftColumn class="max700px  "/>
+      <LeftColumn class="max800px  "/>
       <CenterColumn v-if="state_page==0" :startGame="play_game" class="onlyMobile"/>
       <GameArea v-if="state_page==1" :game_finish_callback="game_finish_callback" class="onlyMobile"/>
       <PromoArea v-if="state_page==2" :promo="promo" class="onlyMobile"/>
       <RightColumn  class="max1000px "/>
     </div>
-    <Footer class="max700px"/>
+    <Footer class="max800px"/>
   </div>
 
 </template>
@@ -107,10 +107,10 @@
     }
   }
 
-  @media  (max-width: 700px) {
-    .max700px {
+  @media  (max-width: 800px) {
+    .max800px {
         display: none;
-        background-color: red;
+        /* background-color: red; */
     }
     .onlyMobile{     
       width: 100% !important;

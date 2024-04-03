@@ -17,8 +17,8 @@
     }
 
     .right_column{
-        max-width: 380px;  
-        width: 360px;
+        max-width: 420px;  
+        width: 420px;
         min-width: 280px;
         height: 100%;
         display: flex;
