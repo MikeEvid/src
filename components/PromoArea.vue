@@ -49,6 +49,17 @@
 </template>
 
 <style scoped>
+    @media  (max-width: 868px) {
+
+        .promo_column{
+            /* max-height: 110% !important; */
+            max-width: 440px;  
+            background-image: none !important;
+        }
+        .bottom_area{
+            border-radius: 20px !important;
+        }
+    }
     .krovat{
         object-fit: contain;
         width: 122px;

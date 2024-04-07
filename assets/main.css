@@ -55,3 +55,8 @@ button{
   font-family: "Gilroy-Light";
   src: url('../fonts/Gilroy/Gilroy-Light.ttf');
 }
+
+
+.red{
+  background-color: RED;
+}

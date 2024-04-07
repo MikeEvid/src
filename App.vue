@@ -43,7 +43,7 @@
               console.log(response.data);
               if(response.data.status == 200 && parseInt(response.data.data) > 1){
                 this.promo = response.data.data;
-                this.state_page = 2;
+               // this.state_page = 2;
               }
             }
           });
@@ -75,21 +75,22 @@
 </script>
 
 <template>
-  <div class="main_container" >
+  <div class="main_container " >
     <BackgroundElements className="fullSpace2 "/>
-    <div  class="row_main_columns onlyMobileMargin">
-      <LeftColumn class="max700px  "/>
-      <CenterColumn v-if="state_page==0" :startGame="play_game" class="onlyMobile"/>
-      <GameArea v-if="state_page==1" :game_finish_callback="game_finish_callback" class="onlyMobile"/>
-      <PromoArea v-if="state_page==2" :promo="promo" class="onlyMobile"/>
-      <RightColumn  class="max1000px "/>
+    <div  class="row_main_columns onlyMobileMargin ">
+      <LeftColumn class="notMobile  "/>
+      <CenterColumn v-if="state_page==0" :startGame="play_game" class="onlyMobile mobileZoom " />
+      <GameArea v-else-if="state_page==1" :game_finish_callback="game_finish_callback" class="onlyMobile mobileZoom"/>
+      <PromoArea v-else-if="state_page==2" :promo="promo" class="onlyMobile mobileZoom"/>
+      <RightColumn  class="notTablet "/>
     </div>
-    <Footer class="max700px"/>
+    <Footer class="notMobile"/>
   </div>
 
 </template>
 
 <style scoped>
+
 
 .fullSpace2{
     position: absolute;
@@ -100,22 +101,31 @@
     position: absolute;
   }
 
-  @media  (max-width: 1000px) {
-    .max1000px {
+  @media  (max-width: 1160px) {
+    .notTablet {
       display: none;
-      background-color: red;
     }
   }
 
-  @media  (max-width: 700px) {
-    .max700px {
+  @media  (max-width: 868px) {
+    .main_container{
+      justify-content: end;
+    }
+    .row_main_columns{
+      margin-top: 20px !important;
+    }
+    .mobileZoom{
+      /* transform: scale(1.2); */
+    }
+    .notMobile {
         display: none;
-        background-color: red;
     }
     .onlyMobile{     
       width: 100% !important;
+      max-height: 100% !important;
     }
     .onlyMobileMargin{
+      /* background-color: red !important; */
       border: none !important
     }
   }
@@ -125,6 +135,7 @@
     flex-direction: column;
     justify-content: center;
     position: relative;
+    max-height: 100% !important;
     /* background-color: red;; */
   }
   .row_main_columns{
@@ -133,9 +144,9 @@
     flex-direction: row;
     justify-content: space-around;
     min-height: 740px;
-    max-height: 740px;;
+    max-height: 940px;;
     max-width: 1600px;
-    min-width: 600px;
+    min-width: 400px;
     width: 100%;
     margin: auto;
   }
